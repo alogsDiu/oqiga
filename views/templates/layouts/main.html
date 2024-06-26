@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oqiga</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+</head>
+<body>
+    <nav class = "navigational" >
+        
+        <div class="brand" href="/">Oqiga</div>
+    
+        <ul class="navbar-menu">
+            <li class="navbar-item"><a class = "navbar-link active" onclick="setActive(this)" hx-target=".content" hx-get="/profile" style="font-weight: 900;">Profile</a></li>
+            <li class="navbar-item"><a class = "navbar-link" onclick="setActive(this)" hx-target=".content" hx-get="/recomendations" style="font-weight: 900;">Recomendations</a></li>
+            <li class="navbar-item"><a class = "navbar-link" onclick="setActive(this)" hx-target=".content" hx-get="/history" style="font-weight: 900;">History</a></li>
+            <li class="navbar-item"><a class = "navbar-link" onclick="setActive(this)" hx-target=".content" hx-get="/my_parties" style="font-weight: 900;">My Parties</a></li>
+        </ul>
+
+    </nav>
+
+    <div class="content" id="content">
+        {{template "profile" .}}
+    </div>
+
+    {{template "footer" }}
+    
+    <script>
+        function setActive(element) {
+            document.querySelectorAll('.navbar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+        function setSelected(element) {
+            document.querySelectorAll('.big2').forEach(link => {
+                link.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+    </script>
+</body>
+</html>

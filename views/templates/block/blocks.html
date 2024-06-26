@@ -1,0 +1,199 @@
+{{block "footer" .}}
+    <footer>
+        <p>&copy; 2024 Oqiga. All rights reserved.</p>
+    </footer>
+{{end}}
+
+{{block "loader" .}}
+    <div id="loading-spinner" >
+        <div class="loader"></div>
+    </div>
+    <style>
+        #loading-spinner{
+            opacity: 0.7;
+            display: none; 
+            justify-content: center; 
+            align-items: center;
+        }
+        .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+    </style>
+{{end}}
+
+{{block "parties" .}}
+<div class="parties-container">
+    {{if .Parties}}
+        {{ range .Parties }}
+            <div class="party-item" id="{{.Id}}">
+                {{template "without_chat" .}}
+            </div>
+        {{end}}
+    {{end}}
+</div>
+{{end}}
+
+{{block "with_chat" .}}
+<div class="image-container"></div>
+
+<div class="party-details">
+    {{template "party_info" .}}
+</div>
+
+<div class="chat">
+    <div style="width:100%; display: flex;justify-content: space-between;align-items: center;">
+        <h2 class = "close_chat" hx-target="#{{.Id}}" hx-get="/without_chat?id={{.Id}}" hx-params="id={{.Id}}" 
+        style="background-color:#063b5e;font-size: 0.9rem; margin: 0.3rem;color: white; border-radius: 10px;width: 20%;text-align: center; transition: 0.5s;"
+        >Close</h2>
+        <h2 class = "close_chat" hx-target="#{{.Id}}" hx-get="/request_participitation?id={{.Id}}" hx-params="id={{.Id}}" 
+        style="background-color:#063b5e;font-size: 0.9rem; margin: 0.3rem;color: white; border-radius: 10px;width: 20%;text-align: center; transition: 0.5s;"
+        >Go</h2>
+    </div>
+    <div class="messages_container" id="ms_{{.Id}}">
+    {{if .Messages}}
+        {{ range .Messages }}
+            {{template "message" .}}
+        {{end}}
+    {{end}}
+    <script>
+        var container = document.getElementById("ms_"+"{{.Id}}");
+        if (container) {
+            container.scrollTop = container.scrollHeight;
+        }
+        document.addEventListener('htmx:afterSwap',function(){
+                document.getElementById("ci{{.Id}}").value = '';
+            }
+        )
+    </script>
+    </div>
+    <form class="input_container" hx-post="/send_message?id={{.Id}}&whose=my" hx-trigger="submit" hx-target="#ms_{{.Id}}" hx-swap="beforeend" >
+        <input type="text" id="ci{{.Id}}" name="ci{{.Id}}"  class="chat-input" placeholder="Type a message...">
+        <button id="sb{{.Id}}" type="submit" class="send-button" >Send</button>
+    </form>
+</div>
+{{end}}
+
+{{block "party_info" .}}
+    <h2 class="party-name">{{.Name}}</h2>
+    <p class="party-city"><strong>City: </strong>{{.City}}</p>
+    <p class="party-date"><strong>Date: </strong>{{.Date}}</p>
+    <p class="party-organizer"><strong>Organized by: </strong> {{.Organizer}}</p>
+    <p class="party-description"><strong>About: </strong>{{.About}}</p>
+{{end}}
+
+{{block "without_chat" .}}
+    <div class="image-container" hx-get="/chat?id={{.Id}}" hx-target="#{{.Id}}"></div>
+    <div class="party-details" hx-get="/chat?id={{.Id}}" hx-target="#{{.Id}}">
+        {{template "party_info" .}}
+    </div>
+{{end}}
+
+{{block "message" .}}
+<div class="message {{.Whose}}">
+    <p>{{.Text}}</p>
+</div>
+{{end}}
+
+{{block "profile" .}}
+<div class="profile_left">
+    <div class="image_container">
+        <!-- image loaded from the database -->
+    </div>
+    
+    <div class="rating_container">
+        <strong style="margin: 0.5rem; padding:1rem; font-size: 1.5rem; font-weight: 900;">Rating : {{ .Rating }} / 100</strong>
+        <div class="ratings" style="padding:1rem; font-weight: 900; display: flex; justify-content: center; align-items: center;">
+            <div style="margin: 0.3rem; border: 2px solid white; border-radius: 10px; width: 30vw; height: 2vh; display: flex; align-items: center; position: relative; background-color: black;">
+                <div style="height: 100%;background-color: white; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 10px; width:{{ .Rating }}%;">
+                
+                </div>
+            </div>                    
+        </div>
+    </div>
+    
+    <div class="rating_container">
+        <strong style="margin: 0.5rem; padding:1rem; font-size: 1.5rem;font-weight: 900;">Coments</strong>
+        <div class="coments" style="padding:1rem;font-weight: 900;" >
+            {{if .Coments}}
+                {{ range .Coments }}
+                    <div class="coment">
+                        {{ . }}
+                    </div>
+                {{ end }}
+            {{end}}
+        </div>
+    </div>
+
+</div>
+
+<div class="profile_right">
+    <div class="info_item"><strong style="font-weight: 700;">Name</strong><br><br><span class="nickname" style="font-weight: 500;">{{.Name}}</span></div>
+    <div class="info_item"><strong style="font-weight: 700;">Phone</strong><br><br><span class="number" style="font-weight: 500;">{{.Number}}</span></div>
+    <div class="info_item"><strong style="font-weight: 700;">Email</strong><br><br><span class="email" style="font-weight: 500;">{{.Email}}</span></div>
+    <div class="info_item"><strong style="font-weight: 700;">About</strong><br><br><span class="about" style="font-weight: 500;">{{.About}}</span></div>
+</div>
+{{end}}
+
+{{block "recomendations" .}}
+<div style="width: 100%; height: 100%; margin:0;padding:0;">
+    <div class="devide">
+        <h2 ><a class="big2 selected"  onclick="setSelected(this)" hx-get="/all_recomendations" hx-target=".recomendations_container" >All</a></h2>
+        <h2 ><a class="big2" onclick="setSelected(this)" hx-get="/confirmed_recomendations" hx-target=".recomendations_container">Confirmed</a></h2>
+    </div>
+    <div class="recomendations_container">
+        {{if .}}
+            {{template "parties" .}}
+        {{end}}
+    </div>    
+</div>
+{{end}}
+
+{{block "my_parties" .}}
+<div class="my_parties">
+    <h1>Party List</h1>
+    <table class="party_list">
+        <thead>
+            <tr>
+                <th>Party Name</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody class="party_container">
+        {{if .}}
+            {{ range .}}
+                    {{template "party_row" .}}
+            {{end}}
+        {{end}}
+        </tbody>
+    </table>
+</div>
+{{end}}
+
+{{block "party_row" .}}
+<tr class="one_party" hx-post>
+    <td>{{.Name}}</td>
+    <td>NO Photo</td>
+</tr>
+{{end}}
+
+{{block "history" .}}
+    {{if .}}
+        {{range .Parties_attended}}
+            {{template "without_chat" .}}
+        {{end}}
+    {{else}}
+            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                Sory there are no parties you have previously attended
+            </div>
+    {{end}}
+{{end}}

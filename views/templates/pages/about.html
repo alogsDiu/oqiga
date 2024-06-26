@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oqiga</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+</head>
+<body style="margin: 0; padding: 0;">
+{{block "about" .}}
+<div class = "wrapper">
+    <header class="guest_header">
+        <div class="container">
+            <div class="oqiga_container">
+                <h1>Oqiga</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#who-we-are">Who We Are</a></li>
+                    <li><a href="#our-mission">Our Mission</a></li>
+                    <li><a href="#our-values">Our Values</a></li>
+                    <li><a href="#our-story">Our Story</a></li>
+                    <li><a href="#our-team">Our Team</a></li>
+                    <li><a href="#get-in-touch">Get in Touch</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button onclick="window.location='/log_in'">Log In</button>
+                <button onclick="window.location='/sign_up'">Register</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <section id="who-we-are">
+            <h2>Who We Are</h2>
+            <div>
+                <p>At Oqiga, we are passionate about bringing people together. Founded in 2024, we are a dedicated team committed to helping you discover local gatherings such as parties, tea parties, reading clubs, and more. Whether paid or free, we make it easy for you to find events that match your interests.</p>
+            </div>
+        </section>
+
+        <section id="our-mission">
+            <h2>Our Mission</h2>
+            <div>
+                <p>Our mission is to connect people through shared experiences and foster a sense of community. We strive to create a platform where everyone can find events that resonate with them, making it easier to meet new people and engage in activities they love.</p>
+            </div>
+        </section>
+
+        <section id="our-values">
+            <h2>Our Values</h2>
+            <div>
+                <ul>
+                    <li><strong>Community:</strong> We believe in the power of community and aim to strengthen the bonds between people through shared experiences.</li>
+                    <li><strong>Accessibility:</strong> Our platform is designed to be easy to use, ensuring that everyone can find and attend gatherings that interest them.</li>
+                    <li><strong>Inclusivity:</strong> We are committed to creating an inclusive environment where everyone feels welcome and valued.</li>
+                    <li><strong>Fun:</strong> Life is better when you're having fun. We want to make it easy for you to find enjoyable events and activities.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="our-story">
+            <h2>Our Story</h2>
+            <div>
+                <p>Oqiga started with a simple idea: to make it easier for people to find local gatherings and connect with others who share their interests. From small beginnings, we've grown into a platform that offers a wide range of events, from casual meetups to organized activities. Our journey has been driven by our passion for bringing people together and creating memorable experiences.</p>
+            </div>
+        </section>
+
+        <section id="our-team">
+            <h2>Our Team</h2>
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <img src="img/collective.jpg" alt="Our Photo">
+                <div>    
+                    <p>Consists of three shut-in roomates</p>
+                    <ul>
+                        <li><strong>Darkhan Kusaiyn :</strong> Clever dude. </li>
+                        <li><strong>Aldiyar Zhasulan :</strong> Smart one. </li>
+                        <li><strong>Sulanov Yerzhan :</strong> Not sure. </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="get-in-touch">
+            <h2>Get in Touch</h2>
+            <div>
+                <p>We love hearing from our community. Whether you have a question, feedback, or just want to say hello, feel free to reach out to us at <a href="mailto:contact@oqiga.com">contact@oqiga.com</a>.</p>
+            </div>
+        </section>
+    </div>
+
+    {{template "footer" .}}
+</div>
+{{end}}
+</body>
+</html>

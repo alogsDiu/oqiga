@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oqiga log in</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+</head>
+<body style="margin: 0; padding: 0;">
+{{block "login" .}}
+<div class="login_page_wrapper">
+    <div class="login-container">
+        <h1>Login</h1>   
+        {{template "loader" .}}
+        <form hx-post="/log_in" hx-target="body" hx-swap="innerHTML" onsubmit="document.getElementById('loading-spinner').style.display='flex';" hx-push-url="true">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            {{if eq .Val 0 }}
+                <h3 style="color: brown;">user does not exist!</h3>
+            {{end}}
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            {{if eq .Val 1 }}
+                <h3 style="color: brown;">password is not correct !</h3>
+            {{end}}
+            <button type="submit" >Login</button>
+        </form>
+        <p>Don't have an account? <a href="/sign_up">Sign up</a></p>
+        <p><a href="/forgot_pass" >Forgot password ?</a></p>
+    </div>
+</div>
+<script>
+    // Function to hide an element after a delay
+    function hideElementAfterDelay(element, delay) {
+      setTimeout(() => {
+        element.style.display = 'none';
+      }, delay);
+    }
+
+    // Get all <h3> elements and hide them after a specified delay
+    document.querySelectorAll('h3').forEach((element, index) => {
+      hideElementAfterDelay(element, (index + 1) * 5000); // Delay increases for each element
+    });
+</script>
+{{end}}
+</body>
+</html>
