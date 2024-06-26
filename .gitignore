@@ -1,0 +1,42 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output directories
+bin/
+obj/
+
+# IDE/Editor directories
+.vscode/
+.idea/
+
+# Dependency directories
+vendor/
+
+# Environment files
+.env
+
+# Air configuration
+.air.toml
+
+# Vim swap files
+*.swp
+
+# Go coverage files
+*.out
+
+# Node modules (if you have frontend code)
+node_modules/
+
+# Log files
+*.log
+
+# Build directories
+/build/
+
+# Temporary files
+/tmp/
